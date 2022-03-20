@@ -11,3 +11,6 @@ too much of a concern and allows more flexibility.
 2. Plug in the trinkey and tap the reset button twice
 3. Copy the circuit python uf2 to the disc that shows up
 4. Rename the desired example to code.py and copy to the CIRCUITPYTHON disc that should now be mounted
+```
+cp serial_control.py /Volumes/CIRCUITPY/code.py
+```
