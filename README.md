@@ -45,6 +45,12 @@ Restart=always
 WantedBy=multi-user.target
 ```
 
+Alternatively replace the example one with the example in this repo.
+```
+sudo wget -O /lib/systemd/system/ser2net.service https://raw.githubusercontent.com/martinwoodward/trinkey/HEAD/ser2net.service
+```
+
+
 Next you will want to edit the `/etc/ser2net.yaml' file as per the [example](ser2net.yaml)
 
 ```
