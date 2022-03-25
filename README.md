@@ -21,7 +21,7 @@ to TCP for access from inside a docker container or other application with local
 
 To install:
 ```
-sudo apt install ser2net
+sudo apt install -y ser2net
 ```
 
 As of March 25 2022, the default install of ser2net on Raspbian Bullseye will not work as the network needs to be available
