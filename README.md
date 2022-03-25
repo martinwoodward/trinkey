@@ -14,3 +14,48 @@ too much of a concern and allows more flexibility.
 ```
 cp serial_control.py /Volumes/CIRCUITPY/code.py
 ```
+
+## Adding ser2net
+ser2net allows sharing of serial ports over a network connection and can be used to bridge the USB port serial connection
+to TCP for access from inside a docker container or other application with local network access.
+
+To install:
+```
+sudo apt install ser2net
+```
+
+As of March 25 2022, the default install of ser2net on Raspbian Bullseye will not work as the network needs to be available
+before starting the service.  To fix this `sudo nano /lib/systemd/system/ser2net.service` then edit the `[Unit]` section
+as below. You may also wish to get the server to `Restart=always`
+
+```
+[Unit]
+Description=Serial port to network proxy
+Documentation=man:ser2net(8)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+EnvironmentFile=-/etc/default/ser2net
+ExecStart=/usr/sbin/ser2net -n -c $CONFFILE -P /run/ser2net.pid
+Type=exec
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+```
+
+Next you will want to edit the `/etc/ser2net.yaml' file as per the [example](ser2net.yaml)
+
+```
+sudo wget -O /etc/ser2net.yaml https://raw.githubusercontent.com/martinwoodward/trinkey/HEAD/ser2net.yaml
+```
+
+Finally you can restart the service
+```
+sudo systemctl restart ser2net
+```
+
+Then test it by telnet-ing to port 2000 on the machine.
+
+Assuming that works, reboot the pi and then check the port has come up once restarted.
